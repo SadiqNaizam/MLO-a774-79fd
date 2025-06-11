@@ -1,87 +1,65 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Assuming react-router-dom for navigation
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, Bell, UserCircle } from 'lucide-react'; // Example icons
+import { Menu, Bell, Settings, X } from 'lucide-react'; // Added X for close
+import TsbLogo from '@/components/icons/TsbLogo'; // Assuming a TSB logo SVG component
 
 interface HeaderProps {
-  siteName?: string;
+  pageTitle?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ siteName = "MyBank" }) => {
-  console.log("Rendering Header");
-
-  // Placeholder for mobile menu state and toggle function
+const Header: React.FC<HeaderProps> = ({ pageTitle = "Overview" }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <header className="bg-primary text-primary-foreground shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo and Site Name */}
-          <Link to="/" className="text-xl font-bold">
-            {siteName}
-          </Link>
-
-          {/* Desktop Navigation (Example) */}
-          <nav className="hidden md:flex space-x-4">
-            <Link to="/dashboard">
-              <Button variant="ghost" className="text-primary-foreground hover:bg-primary/90">Dashboard</Button>
-            </Link>
-            <Link to="/transfer">
-              <Button variant="ghost" className="text-primary-foreground hover:bg-primary/90">Transfers</Button>
-            </Link>
-            <Link to="/cards">
-              <Button variant="ghost" className="text-primary-foreground hover:bg-primary/90">Cards</Button>
-            </Link>
-            {/* Add more navigation items as needed */}
-          </nav>
-
-          {/* Right side icons (Desktop) */}
-          <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" size="icon" aria-label="Notifications">
-              <Bell className="h-5 w-5" />
-            </Button>
-            <Link to="/profile">
-              <Button variant="ghost" size="icon" aria-label="Profile">
-                <UserCircle className="h-6 w-6" />
-              </Button>
+    <>
+      <header className="bg-tsb-white text-tsb-dark-text shadow-sm sticky top-0 z-50 border-b border-tsb-neutral-grey-medium">
+        <div className="container mx-auto px-4 h-[56px] flex items-center justify-between">
+          {/* Left Icon: Hamburger Menu */}
+          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Open menu" className="md:hidden text-tsb-blue">
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+          <div className="hidden md:block w-10"> {/* Spacer for desktop if no left icon */}
+            <Link to="/" aria-label="Home">
+              <TsbLogo className="h-7 text-tsb-blue" />
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Open menu">
-              <Menu className="h-6 w-6" />
+
+          {/* Center: TSB Logo or Page Title */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center">
+            <Link to="/" className="md:hidden">
+              <TsbLogo className="h-7 text-tsb-blue" />
+            </Link>
+            <span className="hidden md:block text-lg font-semibold text-tsb-dark-text">{pageTitle}</span>
+          </div>
+
+          {/* Right Icons: Notification Bell or Settings */}
+          <div className="flex items-center space-x-1">
+            <Button variant="ghost" size="icon" aria-label="Notifications" className="text-tsb-blue">
+              <Bell className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" aria-label="Settings" className="text-tsb-blue">
+              <Settings className="h-5 w-5" />
             </Button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu (Dropdown) */}
+      {/* Mobile Menu (Dropdown) - Full screen or styled dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-primary border-t border-primary/50">
-          <nav className="flex flex-col space-y-1 px-2 py-3">
-            <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start text-primary-foreground hover:bg-primary/90">Dashboard</Button>
-            </Link>
-            <Link to="/transfer" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start text-primary-foreground hover:bg-primary/90">Transfers</Button>
-            </Link>
-            <Link to="/cards" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start text-primary-foreground hover:bg-primary/90">Cards</Button>
-            </Link>
-            <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="ghost" className="w-full justify-start text-primary-foreground hover:bg-primary/90">Profile</Button>
-            </Link>
-             <Button variant="ghost" className="w-full justify-start text-primary-foreground hover:bg-primary/90" aria-label="Notifications">
-              <Bell className="h-5 w-5 mr-2" /> Notifications
-            </Button>
+        <div className="md:hidden fixed inset-0 top-[56px] bg-tsb-white z-40 p-4">
+          <nav className="flex flex-col space-y-2">
+            <Link to="/accounts-dashboard" onClick={toggleMobileMenu} className="p-3 rounded-md hover:bg-tsb-neutral-grey-light text-tsb-dark-text font-medium">Dashboard</Link>
+            <Link to="/fund-transfer" onClick={toggleMobileMenu} className="p-3 rounded-md hover:bg-tsb-neutral-grey-light text-tsb-dark-text font-medium">Transfers</Link>
+            <Link to="/card-controls" onClick={toggleMobileMenu} className="p-3 rounded-md hover:bg-tsb-neutral-grey-light text-tsb-dark-text font-medium">Cards</Link>
+            <Link to="/profile" onClick={toggleMobileMenu} className="p-3 rounded-md hover:bg-tsb-neutral-grey-light text-tsb-dark-text font-medium">Profile</Link>
             {/* Add more mobile navigation items */}
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 };
 
