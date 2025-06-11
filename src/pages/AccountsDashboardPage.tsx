@@ -1,120 +1,91 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom'; // Keep if needed for other actions
 import Header from '@/components/layout/Header';
-import AccountSummaryCard from '@/components/AccountSummaryCard';
-import Footer from '@/components/layout/Footer';
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import BottomNavigation from '@/components/layout/BottomNavigation';
+import SpendSaveCard from '@/components/SpendSaveCard';
+import SpendSaveAccordion from '@/components/SpendSaveAccordion';
+import ESavingsCard from '@/components/ESavingsCard';
+import OverwriteRemainingSection from '@/components/OverwriteRemainingSection';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DollarSign, Send, Settings, CreditCard } from 'lucide-react';
+import { Button } from '@/components/ui/button'; // For custom styled TSB Button
 
 const AccountsDashboardPage = () => {
-  console.log('AccountsDashboardPage loaded');
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Keep if navigation from this page is needed
+  const [isOverwriteOn, setIsOverwriteOn] = useState(false);
 
-  const mockAccounts = [
-    {
-      accountId: 'ACC123456',
-      accountName: 'Current Account',
-      accountType: 'Personal Current Account',
-      accountNumber: '**** **** **** 6789',
-      sortCode: '10-20-30',
-      balance: 12540.75,
-      currencySymbol: '£',
-      recentActivity: [
-        { id: 'txn1', description: 'Grocery Store', amount: '-£45.20', date: '2024-07-28' },
-        { id: 'txn2', description: 'Salary Deposit', amount: '+£2500.00', date: '2024-07-25' },
-        { id: 'txn3', description: 'Online Shopping', amount: '-£120.50', date: '2024-07-22' },
-      ],
-    },
-    {
-      accountId: 'ACC789012',
-      accountName: 'Savings Account',
-      accountType: 'Instant Access Saver',
-      accountNumber: '**** **** **** 3456',
-      sortCode: '10-20-31',
-      balance: 58200.00,
-      currencySymbol: '£',
-      recentActivity: [
-        { id: 'txn4', description: 'Interest Payment', amount: '+£50.15', date: '2024-07-01' },
-      ],
-    },
-     {
-      accountId: 'ACC345678',
-      accountName: 'Credit Card',
-      accountType: 'Platinum Rewards Card',
-      accountNumber: '**** **** **** 1234',
-      balance: -750.90, // Negative for credit card balance owed
-      currencySymbol: '£',
-      recentActivity: [
-        { id: 'txn5', description: 'Restaurant Bill', amount: '-£85.00', date: '2024-07-29' },
-        { id: 'txn6', description: 'Flight Tickets', amount: '-£450.00', date: '2024-07-20' },
-      ],
-    }
-  ];
+  // Mock data for new components
+  const spendSaveData = { currentSpending: 750.50, budget: 1200 };
+  const eSavingsData = { accountName: "My E-Savings", balance: 10250.75, progress: 65, interestRate: "1.25% AER" };
 
-  const handleMoveMoney = (accountId: string) => {
-    console.log(`Move money clicked for account: ${accountId}`);
-    navigate('/fund-transfer', { state: { fromAccountId: accountId } });
-  };
+  // Example content for accordion
+  const goalsContent = (
+    <ul className="space-y-2">
+      <li className="flex justify-between"><span>Holiday Fund</span> <span className="font-semibold text-tsb-dark-text">£500 / £2000</span></li>
+      <li className="flex justify-between"><span>New Laptop</span> <span className="font-semibold text-tsb-dark-text">£800 / £1000</span></li>
+      <li><Button variant="link" className="p-0 h-auto text-tsb-blue text-xs">View all goals</Button></li>
+    </ul>
+  );
 
-  const handleCardControls = (accountId: string) => {
-    console.log(`Card controls clicked for account: ${accountId}`);
-    // Assuming credit card account ID might be specifically checked or passed differently
-    navigate('/card-controls', { state: { accountId: accountId } });
-  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header siteName="MyBank Dashboard" />
+    <div className="flex flex-col min-h-screen bg-background">
+      <Header pageTitle="Overview" />
       
-      <NavigationMenu className="bg-white border-b shadow-sm sticky top-16 z-40 py-2 justify-center">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/accounts-dashboard" className={navigationMenuTriggerStyle()}>
-              <DollarSign className="h-4 w-4 mr-2" /> Accounts
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/fund-transfer" className={navigationMenuTriggerStyle()}>
-              <Send className="h-4 w-4 mr-2" /> Transfers
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/card-controls" className={navigationMenuTriggerStyle()}>
-             <CreditCard className="h-4 w-4 mr-2" /> Card Services
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink href="/settings" className={navigationMenuTriggerStyle()}> {/* Placeholder for settings */}
-              <Settings className="h-4 w-4 mr-2" /> Settings
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      {/* Main content area with padding for fixed navs and screen edges */}
+      <ScrollArea className="flex-grow" style={{ height: 'calc(100vh - 56px - 64px)' }}> {/* 56px Header, 64px BottomNav */}
+        <main className="container mx-auto py-4 px-4 space-y-4"> {/* Screen padding already by container, py-4 for vertical */}
+          
+          <SpendSaveCard 
+            currentSpending={spendSaveData.currentSpending} 
+            budget={spendSaveData.budget} 
+          />
 
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-6">Your Accounts</h1>
-        <ScrollArea className="h-auto" style={{ maxHeight: 'calc(100vh - 250px)'}}> {/* Adjust height as needed */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockAccounts.map((account) => (
-              <AccountSummaryCard
-                key={account.accountId}
-                accountId={account.accountId}
-                accountName={account.accountName}
-                accountType={account.accountType}
-                accountNumber={account.accountNumber}
-                sortCode={account.sortCode}
-                balance={account.balance}
-                currencySymbol={account.currencySymbol}
-                onMoveMoneyClick={handleMoveMoney}
-                onCardControlsClick={handleCardControls}
-                recentActivity={account.recentActivity}
-              />
-            ))}
-          </div>
-        </ScrollArea>
-      </main>
-      <Footer />
+          <SpendSaveAccordion title="Your Goals">
+            {goalsContent}
+          </SpendSaveAccordion>
+
+          <ESavingsCard 
+            accountName={eSavingsData.accountName}
+            balance={eSavingsData.balance}
+            progress={eSavingsData.progress}
+            interestRate={eSavingsData.interestRate}
+          />
+          
+          {/* Example of another E-Savings type card or other account summary */}
+          <ESavingsCard 
+            accountName="Emergency Fund"
+            balance={5300.00}
+            interestRate="0.50% AER"
+          />
+
+          <OverwriteRemainingSection 
+            isToggleOn={isOverwriteOn}
+            onToggleChange={setIsOverwriteOn}
+          />
+
+          {/* Placeholder for other content or if original AccountSummaryCards are to be listed */}
+          {/* <div className="mt-6">
+             <h2 className="text-xl font-semibold text-tsb-dark-text mb-3">Other Accounts</h2>
+             Original AccountSummaryCard instances could go here if needed, 
+             styled by the global theme changes and new radius.
+          </div> */}
+
+          {/* TSB Styled Button Example */}
+           <div className="pt-4">
+             <h3 className="text-md font-semibold mb-2 text-tsb-dark-text">Button Examples:</h3>
+             <div className="flex space-x-2">
+                <Button className="bg-tsb-blue text-tsb-white rounded-button hover:bg-tsb-blue/90">Primary Action</Button>
+                <Button variant="outline" className="bg-tsb-white border-tsb-blue text-tsb-blue rounded-button hover:bg-tsb-blue/10 hover:text-tsb-blue">
+                    TSB Outlined
+                </Button>
+                <Button variant="ghost" className="text-tsb-blue rounded-button hover:bg-tsb-blue/10">Ghost</Button>
+             </div>
+           </div>
+
+        </main>
+      </ScrollArea>
+      
+      <BottomNavigation />
     </div>
   );
 };
