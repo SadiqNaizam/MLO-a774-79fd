@@ -4,88 +4,108 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
-    --foreground: 227 45% 14%; /* TSB Black #131B33 */
+    /* TSB Color Palette Variables */
+    --tsb-blue: 213 100% 35%; /* #0051b4 */
+    --tsb-light-blue: 200 100% 44%; /* #00A3E1 */
+    --tsb-dark-blue: 208 100% 23%; /* #003974 */
+    --tsb-mid-blue: 208 100% 33%; /* #005AA7 (for gradient) */
+    --tsb-white: 0 0% 100%; /* #ffffff */
+    --tsb-neutral-grey-light: 0 0% 95%; /* #F3F3F3 */
+    --tsb-neutral-grey-medium: 0 0% 90%; /* #E5E5E5 */
+    --tsb-neutral-grey-border: 0 0% 85%; /* #D9D9D9 (general border) */
+    --tsb-dark-text: 0 0% 18%; /* #2D2D2D */
+    --tsb-subtext-grey: 0 0% 46%; /* #757575 */
+    --tsb-teal-accent: 170 65% 44%; /* #27BBA2 */
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 227 45% 14%; /* TSB Black */
+    /* ShadCN UI Theme Variables - Light Mode */
+    --background: var(--tsb-neutral-grey-light); /* #F3F3F3 (Screen background) */
+    --foreground: var(--tsb-dark-text); /* #2D2D2D */
 
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 227 45% 14%; /* TSB Black */
+    --card: var(--tsb-white); /* #FFFFFF */
+    --card-foreground: var(--tsb-dark-text);
 
-    --primary: 213 100% 35%; /* TSB Primary Blue #0051B4 */
-    --primary-foreground: 0 0% 100%; /* White */
+    --popover: var(--tsb-white);
+    --popover-foreground: var(--tsb-dark-text);
 
-    --secondary: 220 10% 95%; /* Light Gray */
-    --secondary-foreground: 227 45% 14%; /* TSB Black */
+    --primary: var(--tsb-blue);
+    --primary-foreground: var(--tsb-white);
 
-    --muted: 220 10% 90%; /* Slightly darker Light Gray */
-    --muted-foreground: 220 10% 60%; /* Medium Gray Text */
+    --secondary: var(--tsb-neutral-grey-medium); /* #E5E5E5 */
+    --secondary-foreground: var(--tsb-dark-text);
 
-    --accent: 197 100% 44%; /* TSB Cyan #00A6E1 */
-    --accent-foreground: 227 45% 14%; /* TSB Black (for text on Cyan) */
+    --muted: var(--tsb-neutral-grey-light); /* #F3F3F3 */
+    --muted-foreground: var(--tsb-subtext-grey); /* #757575 */
+
+    --accent: var(--tsb-light-blue);
+    --accent-foreground: var(--tsb-white); /* Text on light blue accent */
 
     --destructive: 0 84.2% 60.2%; /* Default Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive-foreground: var(--tsb-white);
 
-    --border: 220 15% 85%; /* TSB Light Gray Border */
-    --input: 220 15% 85%; /* TSB Light Gray Input Background */
-    --ring: 197 100% 44%; /* TSB Cyan #00A6E1 (for focus) */
+    --border: var(--tsb-neutral-grey-border); /* Default border for inputs, etc. #D9D9D9 */
+    --input: var(--tsb-neutral-grey-medium); /* Off-state for Switch, or input background if distinct */
+    --ring: var(--tsb-light-blue); /* Focus ring */
 
-    --radius: 0.5rem; /* Default: Softly rounded */
+    --radius: 1rem; /* 16px (for cards, interactive elements) */
 
-    /* TSB Light Mode Sidebar */
-    --sidebar-background: 220 20% 98%; /* Very Light Gray, slightly off-white */
-    --sidebar-foreground: 227 45% 14%; /* TSB Black */
-    --sidebar-primary: 213 100% 35%; /* TSB Primary Blue */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 197 100% 44%; /* TSB Cyan */
-    --sidebar-accent-foreground: 227 45% 14%; /* TSB Black */
-    --sidebar-border: 220 15% 85%; /* TSB Light Gray Border */
-    --sidebar-ring: 197 100% 44%; /* TSB Cyan */
+    /* Sidebar specific (if needed, otherwise inherit) - current file has these, will keep structure */
+    --sidebar-background: 220 20% 98%;
+    --sidebar-foreground: 227 45% 14%;
+    --sidebar-primary: var(--tsb-blue);
+    --sidebar-primary-foreground: var(--tsb-white);
+    --sidebar-accent: var(--tsb-light-blue);
+    --sidebar-accent-foreground: var(--tsb-dark-text);
+    --sidebar-border: var(--tsb-neutral-grey-medium);
+    --sidebar-ring: var(--tsb-light-blue);
 
     /* Font Family */
     --font-sans: "Clearface TSB", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   .dark {
-    --background: 227 45% 14%; /* TSB Navy #131B33 */
-    --foreground: 210 20% 90%; /* Off-white/Light Gray */
+    /* TSB Color Palette Variables (Dark mode adaptations if necessary) */
+    /* Using light mode TSB colors but on dark backgrounds */
+    --tsb-blue-dark-bg-variant: 213 100% 45%; /* Slightly lighter TSB Blue for dark bg */
+    --tsb-light-blue-dark-bg-variant: 200 100% 54%; /* Slightly lighter Light Blue for dark bg */
 
-    --card: 227 45% 14%; /* TSB Navy */
-    --card-foreground: 210 20% 90%; /* Off-white/Light Gray */
+    /* ShadCN UI Theme Variables - Dark Mode */
+    --background: var(--tsb-dark-blue); /* TSB Dark Blue as base background */
+    --foreground: var(--tsb-neutral-grey-light); /* Light text for dark background */
 
-    --popover: 227 45% 14%; /* TSB Navy */
-    --popover-foreground: 210 20% 90%; /* Off-white/Light Gray */
+    --card: 208 100% 18%; /* Darker shade from TSB palette, e.g., near #002A50 */
+    --card-foreground: var(--tsb-neutral-grey-light);
 
-    --primary: 197 100% 44%; /* TSB Cyan #00A6E1 (Lighter CTA for dark mode) */
-    --primary-foreground: 227 45% 14%; /* TSB Black (Text on Cyan) */
+    --popover: 208 100% 18%;
+    --popover-foreground: var(--tsb-neutral-grey-light);
 
-    --secondary: 227 30% 20%; /* Dark Gray */
-    --secondary-foreground: 210 20% 90%; /* Off-white/Light Gray */
+    --primary: var(--tsb-light-blue-dark-bg-variant); /* Light Blue often preferred for CTA on dark */
+    --primary-foreground: var(--tsb-dark-text); /* Dark text on Light Blue */
 
-    --muted: 227 25% 25%; /* Slightly lighter Dark Gray */
-    --muted-foreground: 220 15% 70%; /* Lighter Gray Text */
+    --secondary: 208 100% 15%; /* Darker grey */
+    --secondary-foreground: var(--tsb-neutral-grey-light);
 
-    --accent: 213 100% 35%; /* TSB Primary Blue #0051B4 (Accent for dark mode) */
-    --accent-foreground: 0 0% 100%; /* White (Text on TSB Primary Blue) */
+    --muted: 208 100% 12%;
+    --muted-foreground: var(--tsb-subtext-grey); /* May need adjustment for contrast */
+
+    --accent: var(--tsb-blue-dark-bg-variant); /* TSB Blue as accent */
+    --accent-foreground: var(--tsb-white);
 
     --destructive: 0 72.2% 50.6%; /* Darker Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive-foreground: var(--tsb-white);
 
-    --border: 227 30% 25%; /* Dark Gray Border */
-    --input: 227 30% 25%; /* Dark Gray Input Background */
-    --ring: 197 100% 44%; /* TSB Cyan #00A6E1 (Consistent focus) */
+    --border: 208 100% 25%; /* Darker border */
+    --input: 208 100% 25%; /* Switch off-state, input bg */
+    --ring: var(--tsb-light-blue-dark-bg-variant);
 
-    /* TSB Dark Mode Sidebar */
-    --sidebar-background: 227 40% 18%; /* Slightly Lighter TSB Navy */
-    --sidebar-foreground: 210 20% 90%; /* Off-white/Light Gray */
-    --sidebar-primary: 197 100% 44%; /* TSB Cyan */
-    --sidebar-primary-foreground: 227 45% 14%; /* TSB Black */
-    --sidebar-accent: 213 100% 35%; /* TSB Primary Blue */
-    --sidebar-accent-foreground: 0 0% 100%; /* White */
-    --sidebar-border: 227 30% 25%; /* Dark Gray Border */
-    --sidebar-ring: 197 100% 44%; /* TSB Cyan */
+    /* Sidebar specific (dark) */
+    --sidebar-background: 208 100% 15%;
+    --sidebar-foreground: var(--tsb-neutral-grey-light);
+    --sidebar-primary: var(--tsb-light-blue-dark-bg-variant);
+    --sidebar-primary-foreground: var(--tsb-dark-text);
+    --sidebar-accent: var(--tsb-blue-dark-bg-variant);
+    --sidebar-accent-foreground: var(--tsb-white);
+    --sidebar-border: 208 100% 25%;
+    --sidebar-ring: var(--tsb-light-blue-dark-bg-variant);
   }
 }
 
@@ -97,4 +117,9 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+}
+
+/* Custom gradient classes if needed elsewhere, or apply inline */
+.text-gradient-tsb {
+  @apply bg-gradient-to-r from-[hsl(var(--tsb-mid-blue))] to-[hsl(var(--tsb-light-blue))] bg-clip-text text-transparent;
 }
